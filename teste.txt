@@ -1,0 +1,76 @@
+passo a passo adicionado no readme md.
+
+var rl = readline.createInterface({
+    input: fs.createReadStream('./src/Taco-ProdPrep.csv'),
+    output: process.stdout,
+    terminal: false
+})
+
+let i:number = 0;
+
+rl.on('line', function (linha: any) { // função que lê linha a linha do arquivo e as colaca na variável linha
+    if (i > 0) { // só processa se não for a primeira linha
+        var l = linha.split(';'); // quebra a linha nos pontos-e-vírgula gerando um array com cada campo/coluna
+        //trocando , (virgulas) por . (pontos) para salvar em um tipo float.
+       
+
+        console.log(l); // mostra o objeto que será gravado no BD
+        const p = new Prodprep(parseInt(l[0]), parseInt(l[1]),parseInt(l[2]),parseInt(l[3]),parseFloat(l[4]),parseFloat(l[5]),parseFloat(l[6]),parseFloat(l[7]),parseFloat(l[8]),parseFloat(l[9]),parseFloat(l[10]),parseFloat(l[11]),parseFloat(l[12]),parseFloat(l[13]),parseFloat(l[14]),parseFloat(l[15]),parseFloat(l[16]),parseFloat(l[17]),parseFloat(l[18]),parseFloat(l[19]),parseFloat(l[20]),parseFloat(l[21]),parseFloat(l[22]),parseFloat(l[23]),parseFloat(l[24]),parseFloat(l[25]),parseFloat(l[26]),parseFloat(l[27]),parseFloat(l[28]),parseFloat(l[29]),parseFloat(l[30]),parseFloat(l[31]),parseFloat(l[32]),parseFloat(l[33]),parseFloat(l[34]),parseFloat(l[35]),parseFloat(l[36]),parseFloat(l[37]),parseFloat(l[38]),parseFloat(l[39])); // instancia um objeto do Modelo a ser usado
+        fetch('http://localhost:3001/prodprep', {  // cria conexão HTTP com post para salvar o objeto no BD
+            method: 'POST', // tipo de requisição
+            headers: { // cabeçalho da requisição
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ // corpo da requisição convertido para JSON
+                id:              p.id,
+                pp_produto:      p.pp_produto,
+                pp_preparacao:   p.pp_preparacao,
+                pp_energia:      p.pp_energia,
+                pp_proteina:     p.pp_proteina,
+                pp_lipidios:     p.pp_lipidios,
+                pp_carboidrato:  p.pp_carboidrato,
+                pp_fibra:        p.pp_fibra,
+                pp_colesterol:   p.pp_colesterol,
+                pp_agsaturado:   p.pp_agsaturado,
+                pp_agmono:       p.pp_agmono,
+                pp_agpoli:       p.pp_agpoli,
+                pp_aglinoleico:  p.pp_aglinoleico,
+                pp_aglinolenico: p.pp_aglinolenico,
+                pp_agtranstotal: p.pp_agtranstotal,
+                pp_acucartotal:  p.pp_acucartotal,
+                pp_acucaradicao: p.pp_acucaradicao,
+                pp_calcio:       p.pp_calcio,
+                pp_magnesio:     p.pp_magnesio,
+                pp_manganes:     p.pp_manganes,
+                pp_fosforo:      p.pp_fosforo,
+                pp_ferro:        p.pp_ferro,
+                pp_sodio:        p.pp_sodio,
+                pp_sodioadicao:  p.pp_sodioadicao,
+                pp_potassio:     p.pp_potassio,
+                pp_cobre:        p.pp_cobre,
+                pp_zinco:        p.pp_zinco,
+                pp_selenio:      p.pp_selenio,
+                pp_retinol:      p.pp_retinol,
+                pp_vitamina_a:   p.pp_vitamina_a,
+                pp_tiamina:      p.pp_tiamina,
+                pp_riboflavina:  p.pp_riboflavina,
+                pp_niacina:      p.pp_niacina,
+                pp_niacina_ne:   p.pp_niacina_ne,
+                pp_piridoxina:   p.pp_piridoxina,
+                pp_cobalamina:   p.pp_cobalamina,
+                pp_folato:       p.pp_folato,
+                pp_vitamina_d:   p.pp_vitamina_d,
+                pp_vitamina_e:   p.pp_vitamina_e,
+                pp_vitamina_c:   p.pp_vitamina_c
+            })
+        })
+            .then(response => response.json()) // resposta do backend
+            .then(data => {
+                console.log(data); // a rotina retorna o ID do objeto cadastrado
+            })
+            .catch(error => {
+                console.error("erro prodprep: ",error); // mostra erro casso ocorra
+            });
+    }
+    i++; // incrementa a varíavel de controle de linha
+})

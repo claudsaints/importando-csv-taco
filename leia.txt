@@ -1,0 +1,3 @@
+oi professor, diminui os dados da prodprep para 3 linhas pois tinhas mais de 2mil linhas. 
+tambem criei esse arquivo 'criar' que cria as tabelas do banco apenas ao executar...
+tem um print da consulta no sgbd 'veja.jpg';
